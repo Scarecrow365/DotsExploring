@@ -13,6 +13,7 @@ namespace View
     [SerializeField] private int gridSize;
     [SerializeField] private int spread;
     [SerializeField] private Vector2 speedRange;
+    [SerializeField] private Vector2 lifetimeRange;
 
     private BlobAssetStore blobAssetStore;
 
@@ -37,6 +38,7 @@ namespace View
           SetDestination(x, z, entityManager, instance);
           SetTranslation(x, z, entityManager, instance);
           SetSpeed(entityManager, instance);
+          SetLifeTime(entityManager, instance);
         }
       }
     }
@@ -46,7 +48,7 @@ namespace View
       var position = new float3(x * spread, 0, z * spread);
       entityManager.SetComponentData(instance, new Destination { Value = position });
     }
-    
+
     private void SetTranslation(int x, int z, EntityManager entityManager, Entity instance)
     {
       var position = new float3(x * spread, 0, z * spread);
@@ -57,6 +59,12 @@ namespace View
     {
       var speed = Random.Range(speedRange.x, speedRange.y);
       entityManager.SetComponentData(instance, new MovementSpeed { Value = speed });
+    }
+
+    private void SetLifeTime(EntityManager entityManager, Entity instance)
+    {
+      var lifetime = Random.Range(lifetimeRange.x, lifetimeRange.y);
+      entityManager.SetComponentData(instance, new Lifetime { Value = lifetime });
     }
 
     private void OnDestroy()
